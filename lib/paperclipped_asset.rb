@@ -2,7 +2,7 @@ class PaperclippedAsset < ActiveRecord::Base
   belongs_to :attachable, :polymorphic => true
 
   has_attached_file :data,
-                    :styles => { :tiny   => "64x64#",
+                    :styles => { :thumb   => "64x64#",
                                  :small  => "176x112#",
                                  :medium => "630x630>",
                                  :large  => "1024x1024>" },
@@ -29,6 +29,10 @@ class PaperclippedAsset < ActiveRecord::Base
   # For example "image/png" becomes "image-png.png"
   def icon
     "#{data_content_type.gsub(/[\/\.]/,'-')}.png"
+  end
+
+  def to_s
+    url
   end
 
 end

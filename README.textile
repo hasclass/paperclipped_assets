@@ -25,15 +25,17 @@ h2. Example
 h3. in your model
 
   class Client < ActiveRecord::Base
-    has_paperclipped_model :logo
-    has_paperclipped_model :another_file
+    has_paperclipped_asset :logo
+    has_paperclipped_asset :another_file
   end
   
   class User < ActiveRecord::Base
-    has_paperclipped_model :avatar
+    has_paperclipped_asset :avatar
   end
 
 h3. in your view
+
+views/clients/_form.html.erb
 
   <% form_for @client, :html => {:multipart => true} do |f| %>
     <%= f.file_field :logo_data  %>
@@ -41,14 +43,33 @@ h3. in your view
     <%= f.submit 'save' %>
   <% end %>
   
+views/clients/show.html.erb  
+
+  <%= image_tag @client.logo if @client.logo %>
+  <%= link_to_if @client.another_file, 'download file', @client.another_file %>
+
+views/users/_form.html.erb
+  
   <% form_for @user, :html => {:multipart => true} do |f| %>
     <%= f.file_field :avatar_data  %>
     <%= f.submit 'save' %>
   <% end %>
 
+views/users/show.html.erb  
+  <%= image_tag @user.avatar if @user.avatar %>
+  <%= image_tag @user.avatar.url(:thumb)  if @user.avatar %>
+  <%= image_tag @user.avatar.url(:small)  if @user.avatar %>
+  <%= image_tag @user.avatar.url(:medium) if @user.avatar %>
+
 h3. in your controller
 
 no additional code needed
+
+h3. Hints
+
+The #to_s returns the public url of the file, so that we can:
+  
+  <%= link_to 'download file', @client.logo %>
 
 
 h2. How it works
