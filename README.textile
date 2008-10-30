@@ -1,0 +1,56 @@
+h1. Helper model for file/asset handling. 
+
+Alpha version. 
+
+h2. Installation
+
+Install Paperclip plugin and paperclipped_assets plugin 
+
+  cd vendors/plugins/
+  git clone git://github.com/thoughtbot/paperclip.git
+  git clone git://github.com/hasclass/paperclipped_assets.git
+
+Generate migration for the "paperclipped_assets"-table
+
+  script/generate paperclipped_assets
+
+Run Migration
+
+  rake db:migrate
+  
+Voilà
+
+h2. Example
+
+h3. in your model
+
+  class Client < ActiveRecord::Base
+    has_paperclipped_model :logo
+    has_paperclipped_model :another_file
+  end
+  
+  class User < ActiveRecord::Base
+    has_paperclipped_model :avatar
+  end
+
+h3. in your view
+
+  <% form_for @client, :html => {:multipart => true} do |f| %>
+    <%= f.file_field :logo_data  %>
+    <%= f.file_field :another_file_data %>
+    <%= f.submit 'save' %>
+  <% end %>
+  
+  <% form_for @user, :html => {:multipart => true} do |f| %>
+    <%= f.file_field :avatar_data  %>
+    <%= f.submit 'save' %>
+  <% end %>
+
+h3. in your controller
+
+no additional code needed
+
+
+h2. How it works
+
+Coming soon.

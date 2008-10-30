@@ -1,4 +1,4 @@
-class PaperclippedAssetGenerator < Rails::Generator::Base
+class PaperclippedAssetsGenerator < Rails::Generator::Base
   def initialize(runtime_args, runtime_options = {})
     super
   end
@@ -8,8 +8,8 @@ class PaperclippedAssetGenerator < Rails::Generator::Base
    
       unless options[:skip_migration]
         m.migration_template 'migration.rb', 'db/migrate', 
-         :assigns => { :migration_name => "PaperclippedAssetMigration" },
-         :migration_file_name => "paperclipped_asset_migration"
+         :assigns => { :migration_name => "PaperclippedAssetsMigration" },
+         :migration_file_name => "paperclipped_assets_migration"
       end
     end
     
