@@ -56,6 +56,7 @@ views/users/_form.html.erb
   <% end %>
 
 views/users/show.html.erb  
+
   <%= image_tag @user.avatar if @user.avatar %>
   <%= image_tag @user.avatar.url(:thumb)  if @user.avatar %>
   <%= image_tag @user.avatar.url(:small)  if @user.avatar %>

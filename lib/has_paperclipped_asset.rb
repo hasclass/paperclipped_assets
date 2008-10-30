@@ -14,7 +14,6 @@ module HasClass
 
           write_inheritable_attribute(:paperclipped_asset_definitions, {}) if paperclipped_asset_definitions.nil?
 
-          
           #association_options[:polymorphic] = true
           association_options[:as]          = :attachable
           association_options[:class_name]  = 'PaperclippedAsset'
@@ -45,27 +44,28 @@ module HasClass
       end
       
       module InstanceMethods                
-        def paperclipped_asset_for(name)
-          asset   = self.send(name)
-          asset ||= self.send("build_#{name}")
-          asset
-        end
-
         def each_paperclipped_asset
           self.class.paperclipped_asset_definitions.each do |name, data_attribute_name|
-            yield(name, paperclipped_asset_for(name),data_attribute_name)
+            yield(name, self.send(name),data_attribute_name)
           end
         end
 
         def save_paperclipped_assets
           logger.info("[paperclipped_asset] Saving assets.")
           each_paperclipped_asset do |name, paperclipped_asset, data_attribute_name|
-            paperclipped_asset.attachable_association_name = name.to_s
-            paperclipped_asset.data = self.send(data_attribute_name)
-            paperclipped_asset.save(false)                        
-          end
+            data = self.send(data_attribute_name)
+            if data 
+              paperclipped_asset ||= self.send("build_#{name}")
+              
+              paperclipped_asset.attachable_association_name = name.to_s
+              paperclipped_asset.data = data
+              paperclipped_asset.save(false)
+            end #if
+          end          
         end
-      end
+        
+        
+      end # InstanceMethods
     end
   end
 end

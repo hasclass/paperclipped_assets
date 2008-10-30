@@ -1,0 +1,3 @@
+sqlite3:
+  :adapter: sqlite3
+  :dbfile: vendor/plugins/paperclipped_assets/spec/db/has_paperclipped_asset.sqlite3.db

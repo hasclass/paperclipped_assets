@@ -2,10 +2,10 @@ class PaperclippedAsset < ActiveRecord::Base
   belongs_to :attachable, :polymorphic => true
 
   has_attached_file :data,
-                    :styles => { :thumb   => "64x64#",
-                                 :small  => "176x112#",
-                                 :medium => "630x630>",
-                                 :large  => "1024x1024>" },
+#                   :styles => { :thumb   => "64x64#",
+#                                :small  => "176x112#",
+#                                :medium => "630x630>",
+#                                :large  => "1024x1024>" },
                     :url    => "/assets/:id/:style/:basename.:extension",
                     :path   => ":rails_root/public/assets/:id/:style/:basename.:extension"                                 
   def url(*args)
